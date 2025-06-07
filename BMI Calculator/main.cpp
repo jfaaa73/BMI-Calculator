@@ -11,55 +11,68 @@
 
 
 #include <iostream>
-#include <stdio.h>
-#include <math.h>
+#include <cmath>
+#include <string>
+
+double calculateBMIImperial(double heightInches, double weightPounds)
+{
+    return weightPounds * 703.0 / std::pow(heightInches, 2);
+}
+
+double calculateBMIMetric(double heightMeters, double weightKg)
+{
+    return weightKg / std::pow(heightMeters, 2);
+}
+
+std::string bmiCategory(double bmi)
+{
+    if (bmi < 18.5)
+        return "Underweight";
+    if (bmi < 25.0)
+        return "Normal weight";
+    if (bmi < 30.0)
+        return "Overweight";
+    return "Obese";
+}
 
 int main()
 {
-    
-    //Initialize 3 variables of type double. Double is a number of high accuracy (compared to integer)
-    double BMI, weight, height;
-    //stores the address of the variable of character type
-    char choice;
- 
-    std::cout << "This program will calculate your BMI \n" << std::endl;
-    //Allowing user to pick their measurement types
-    std::cout << "Please choose either the imperial or metric system(i/m):\n\n";
-    std::cin >> choice;
-    
-    // allowing to Make decisions depending on the input
-    if(choice == 'i')
-    {
-        //Asks user for input
-        std::cout << "\n Please enter your height in inches ";
-        
-        //Saves input from user to variable height
-        std::cin >> height;
-        //Asks user for input
-        std::cout << "please enter your weight in pounds: ";
-        //Saves input from user to variable height
-        std::cin >> weight ;
-        //Does Calculation for User
-        BMI = weight * 703 / pow(height,2);
-        
-        
-    }
-   
-    else{
-        //Asks user for input
-        std::cout << "please enter your height in meters:\n\n ";
-        std::cin >> height;
-        
-        //Asks user for input
-        std::cout << "please enter your weight in kilograms:\n\n ";
-        std::cin >> weight;
-        
-        // After entering the weight and height it will calculate the human's BMI
-        BMI = weight/pow(height,2);
-   
-    }
-    //Giving the total calculations
-    std::cout << "your  BMI is " << BMI << std::endl;
-    return 0;
+    double weight = 0.0;
+    double height = 0.0;
+    char choice = 0;
 
+    std::cout << "This program will calculate your BMI\n";
+
+    while (choice != 'i' && choice != 'm')
+    {
+        std::cout << "Please choose either the imperial or metric system (i/m): ";
+        std::cin >> choice;
+    }
+
+    if (choice == 'i')
+    {
+        std::cout << "\nPlease enter your height in inches: ";
+        std::cin >> height;
+
+        std::cout << "Please enter your weight in pounds: ";
+        std::cin >> weight;
+
+        double bmi = calculateBMIImperial(height, weight);
+        std::cout << "Your BMI is " << bmi
+                  << " (" << bmiCategory(bmi) << ")" << std::endl;
+    }
+    else
+    {
+        std::cout << "\nPlease enter your height in meters: ";
+        std::cin >> height;
+
+        std::cout << "Please enter your weight in kilograms: ";
+        std::cin >> weight;
+
+        double bmi = calculateBMIMetric(height, weight);
+        std::cout << "Your BMI is " << bmi
+                  << " (" << bmiCategory(bmi) << ")" << std::endl;
+    }
+
+    return 0;
 }
